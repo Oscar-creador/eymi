@@ -1,0 +1,152 @@
+class BinaryTree:
+    def __init__(self, key):
+        
+        self.key = key
+        self.lchild = None
+        self.rchild = None
+        
+        
+    def set_list_element(self, list_element):
+        self.lstElement = list_element
+
+    
+    def show_tree(self):
+        """
+        Método que muestra de forma gráfica el árbol binario de búsqueda.
+        Utilizando la librería networkx o igraph
+        """
+        pass
+    
+    def pre_order(self):
+        """
+        _Método que muestra el recorrido del árbol en pre orden
+        """
+        print(self.key, end =" ")
+        if self.lchild:
+            self.lchild.pre_order()
+        if self.rchild:
+            self.rchild.pre_order()
+        
+    
+
+    def post_order(self):
+        """
+        _Método que muestra el recorrido del árbol en post orden
+        """
+        if self.lchild:
+            self.lchild.post_order()
+        print(self.key, end =" ")
+        if self.rchild:
+            self.rchild.post_order()
+
+    def in_order(self):
+        """
+        _Método que muestra el recorrido del árbol en in orden
+        """
+        
+        if self.lchild:
+            self.lchild.in_order()
+        if self.rchild:
+            self.rchild.in_order()
+            
+        print(self.key, end =" ")
+            
+    def search(self, element):
+        
+        if self.key == element:
+            print("El nodo sí esta presente")
+            return
+        
+        if element < self.key:
+            if self.lchild:
+                self.lchild.search(element)
+            else:
+                print("El elemento no esta en el árbol")
+        else:
+            if self.rchild:
+                self.rchild.search(element)
+            else:
+                print("El elemento no está en el árbol")
+                
+        
+    def insert(self, element):
+        
+        """
+        Método que inserta un nuevo elemento en el árbol
+        """
+        if self.key is None:
+            self.key = element
+            return
+        if self.key == element:
+            return
+        if self.key > element:
+            if self.lchild:
+                self.lchild.insert(element)
+            else:
+                self.lchild = BinaryTree(element)
+        else:
+            if self.rchild:
+                self.rchild.insert(element)
+            else:
+                self.rchild = BinaryTree(element)
+        
+    def delete(self, element):
+        """
+        Método que remueve un elemento existente del árbol
+        """
+        
+        if self.key is None:
+            print("El árbol esta vacío")
+            
+        if element < self.key:
+            if self.lchild:
+                self.lchild = self.lchild.delete(element)
+            else:
+                print("No existe ese nodo")
+        elif element > self.key:
+            if self.rchild:
+                self.rchild = self.rchild.delete(element)
+            else:
+                print("No existe ese nodo")
+        else:
+            if self.lchild is None:
+                temp = self.rchild
+                self = None
+                return temp
+            if self.rchild is None:
+                temp = self.lchild
+                self = None
+                return temp
+            node = self.rchild
+            while node.rchild:
+                node = node.lchild
+            self.key = node.key
+            self.rchild = self.rchild.delete(node.key)
+            
+        return self
+            
+            
+
+    def read_txt(self, file_name):
+        """
+        Método que lee datos desde un archivo txt
+        
+        """
+        
+        file = open(file_name, "r")
+        
+        list = []
+        
+        for line in file:
+            list.append(line.strip())
+        
+        lista_len = len(list)
+        
+        for i in range(lista_len):
+            list[i] = int(list[i])
+            
+        self.set_list_element(list)
+        
+        for i in list:
+            root.insert(i)
+            
